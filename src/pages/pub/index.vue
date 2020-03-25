@@ -212,7 +212,7 @@
       }
     },
     created() {
-      console.log('page index created', this)
+      // console.log('page index created', this)
     },
     onLoad() {
       console.log('page index onLoad', this)

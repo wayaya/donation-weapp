@@ -26,8 +26,8 @@
       }
     },
     created () {
-      this.info.content = this.info.content.split('\n')
-      console.log(this.info)
+      this.info.content = this.info.content.split('\n');
+      // console.log(this.info);
     },
     methods: {
     }

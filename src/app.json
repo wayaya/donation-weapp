@@ -1,11 +1,9 @@
 {
   "pages": [
-    "pages/homel/main",
-    "pages/homelc/main",
+    "pages/home/main",
     "pages/pub/main",
     "pages/pubm/main",
     "pages/pubs/main",
-    "pages/home/main",
     "pages/summary/main",
     "pages/organizationDetail/main",
     "pages/organizationList/main",
@@ -18,8 +16,7 @@
     "pages/organDetail/main"
   ],
   "pagesDesc": {
-    "pages/homel/main": "刘倩文的主页",
-    "pages/homelc/main": "刘倩文的主页,为了中间tab按钮的效果"
+    "pages/home/main": "主页"
   },
   "window": {
     "backgroundTextStyle": "light",
@@ -36,7 +33,7 @@
     "list": [
       {
         "text": "首页",
-        "pagePath": "pages/homel/main",
+        "pagePath": "pages/home/main",
         "iconPath": "static/tabs/home.png",
         "selectedIconPath": "static/tabs/home-active.png"
       },

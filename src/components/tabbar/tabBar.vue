@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag, EqualityComparisonWithCoercionJS, HtmlUnknownTarget -->
 <template>
   <div class="tabbar-wrap" :class="isIphoneX? 'isIphoneX':''">
       <ul class="tabbar">
@@ -39,7 +40,7 @@
         navList: [
           {
             'text': '首页',
-            'pagePath': '/pages/homel/main',
+            'pagePath': '/pages/home/main',
             'iconPath': '/static/tabs/home.png',
             'selectedIconPath': '/static/tabs/home-active.png'
           }, {

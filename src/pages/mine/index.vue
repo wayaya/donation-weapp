@@ -124,7 +124,7 @@
       tabBar
     },
     created() {
-      console.log('page index created', this)
+      // console.log('page index created', this)
     },
     mounted() {
       console.log('mounted', this)

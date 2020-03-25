@@ -1,8 +1,0 @@
-{
-  "navigationBarTitleText": "公益捐赠",
-  "usingComponents": {
-    "van-cell": "/static/vant/cell/index",
-    "van-tabs": "/static/vant/tabs/index",
-    "van-tab": "/static/vant/tab/index"
-  }
-}
