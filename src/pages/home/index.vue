@@ -31,31 +31,15 @@
 
     <!-- 获取用户头像与昵称  -->
     <button style="display:block;" open-type="getUserInfo" lang="zh_CN" @getuserinfo="onGotUserInfo">获取用户信息</button>
-
+    <button @click="helloTest">test</button>
     <space :height="'16'"/>
 
     <!-- 捐赠者/机构公示 -->
     <view class="promulgate-container">
       <title-context :headerArray='headers' :itemArray='content' :routerArray="routerArray"
                      title='捐赠者/机构公示'></title-context>
-      <donor-body :headerArray='headers' :itemArray='content'></donor-body>
+      <donor-body :headerArray='headers' :itemArray='content' @changeTab="tabChangeHanlder"></donor-body>
     </view>
-
-    <!-- 捐赠者/机构公示   -->
-    <div class="promulgate-container" style="display: none;">
-      <van-cell title="捐赠者/机构公示" size="large" is-link link-type="navigateTo" url="/pages/promulgateList/main"/>
-      <van-tabs :active="avtiveTab" @change="tabChangeHanlder" line-width="28" color="#35CF82">
-        <van-tab title="个人捐赠"/>
-        <van-tab title="机构捐赠"/>
-      </van-tabs>
-      <scroll-view scroll-x="true" style="width: 100%">
-        <table-component :headers='headers'
-                         :content='content'
-                         :onRowClick='onRowClickHandle'/>
-
-      </scroll-view>
-    </div>
-    <!--    <tab-bar :selectNavIndex="0"></tab-bar>-->
   </view>
 </template>
 <!--suppress NpmUsedModulesInstalled -->
@@ -163,12 +147,81 @@
             type: 2,
             data: ['1155***6436', '3M口罩', '1,000个', '武汉疾控中…', '2020/2/20']
           }
-        ]
+        ],
+        pageNum: 1, // 当前分页
+        pageLimit: 10, // 分页大小
+        hello: this.getPersonalData()
       }
     },
     methods: {
-      handleProxy() {
-        console.log('handleProxy');
+      changeTab(index) {
+
+
+      },
+      helloTest() {
+        console.log("helloTest hello:", this.hello);
+      },
+      // 获取个人公示数据
+      getPersonalData(pageNum = 1, pageLimit = 10) {
+        let that = this;
+        wx.request({
+          // url: 'http://123.56.170.108:8888/api/v1/pub/list', //仅为示例，并非真实的接口地址
+          url: 'https://boxdev.arxanchain.com/api/v1/pub/list', // 首页个人捐赠公示 仅为示例，并非真实的接口地址
+          data: {
+            user_type: 'normal',
+            pub_type: 'donate',
+            start_time: 0,
+            end_time: 0,
+            page_num: pageNum,
+            page_limit: pageLimit
+          },
+          method: 'GET',
+          header: {
+            'content-type': 'application/json' // 默认值
+          },
+          success(res) {
+            console.log(res);
+            console.log(res.data.data.results);
+
+            let dataList = []; // 数据列表
+            let resultList = res.data.data.results;
+            for (let i = 0; i < resultList.length; i++) {
+              let item = resultList[i];
+
+              let data = [];
+              if (item.type === 'supplies') {
+                let name = item.donor_name;
+                // console.log(name);
+                if (name == null || name === '') {
+                  name = "匿名者";
+                }
+                data = [name, item.name, item.number, item.target_name, item.created_at];
+              } else {
+                data = [item.donor_name, "资金", item.amount, item.target_name, item.created_at];
+              }
+
+              let p = {
+                id: item.id, // 数据id
+                type: item.type, // 数据类型
+                data: data // 展示数据
+              };
+              dataList.push(p);
+            }
+
+            // console.log(that);
+            for (let i = 0; i < dataList.length; i++) {
+              that.content.push(dataList[i]); // 追加数据
+            }
+            // that.content = dataList; // 更新数据
+          },
+          fail(res) {
+            // console.log('fail')
+          },
+          complete() {
+            // console.log('comple');
+          }
+        });
+        return "hell0";
       },
       // banner图片跳转
       tabBanner() {
@@ -180,10 +233,70 @@
           url: '/pages/organList/main'
         })
       },
-      tabChangeHanlder(e) {
-        console.log(e);
-        this.avtiveTab = e.target.index;
-        console.log(this.avtiveTab)
+      tabChangeHanlder(index) {
+        console.log("changeTab", index);
+        let that = this;
+        that.avtiveTab = index;
+
+        // 更换数据
+        if (index === 0) {
+          that.getPersonalData(); // 切换到个人公示数据页
+        } else {
+          wx.request({
+            // url: 'http://123.56.170.108:8888/api/v1/pub/list', //仅为示例，并非真实的接口地址
+            url: 'https://boxdev.arxanchain.com/api/v1/pub/list', // 首页个人捐赠公示 仅为示例，并非真实的接口地址
+            data: {
+              user_type: 'org',
+              pub_type: 'donate',
+              start_time: 0,
+              end_time: 0,
+              page_num: 1,
+              page_limit: 50
+            },
+            method: 'GET',
+            header: {
+              'content-type': 'application/json' // 默认值
+            },
+            success(res) {
+              console.log(res);
+              console.log(res.data.data.results);
+
+              let dataList = []; // 数据列表
+              let resultList = res.data.data.results;
+              for (let i = 0; i < resultList.length; i++) {
+                let item = resultList[i];
+
+                let data = [];
+                if (item.type === 'supplies') {
+                  let name = item.donor_name;
+                  // console.log(name);
+                  if (name == null || name === '') {
+                    name = "匿名者";
+                  }
+                  data = [name, item.name, item.number, item.target_name, item.create_at];
+                } else {
+                  data = [item.donor_name, "资金", item.amount, item.target_name, item.create_at];
+                }
+                console.log(data);
+
+                let p = {
+                  id: item.id, // 数据id
+                  type: item.type, // 数据类型
+                  data: data // 展示数据
+                };
+                dataList.push(p);
+              }
+              // console.log(that);
+              that.content = dataList; // 更新数据
+            },
+            fail(res) {
+              console.log('fail')
+            },
+            complete() {
+              // console.log('comple');
+            }
+          });
+        }
       },
       onRowClickHandle(id, type) {
         console.log(id + ',' + type)
@@ -231,6 +344,30 @@
     },
     onHide() {
       // console.log('onHide', this);
+    },
+
+    /**
+     * 页面相关事件处理函数--监听用户下拉动作
+     */
+    onPullDownRefresh: function () {
+      console.log("onPullDownRefresh");
+    },
+
+    /**
+     * 页面上拉触底事件的处理函数
+     */
+    onReachBottom: function () {
+      console.log("onReachBottom");
+      let that = this;
+      that.pageNum += 1; // 页码加一
+      that.getPersonalData(that.pageNum); // 刷新数据
+    },
+
+    /**
+     * 用户点击右上角分享
+     */
+    onShareAppMessage: function () {
+      console.log("onShareAppMessage");
     }
   }
 </script>

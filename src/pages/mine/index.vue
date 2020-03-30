@@ -1,11 +1,11 @@
 <!--suppress HtmlUnknownAttribute, CheckTagEmptyBody, HtmlDeprecatedTag -->
 <template>
-  <div>
+  <view>
     <view class="home-container">
       <!-- 头部 -->
       <view class="head-title">
         <image src="/static/images/mine/head_sec_bg.png" alt="背景图" class="head-bg-img"></image>
-<!--        <image :src="userInfo.avatarUrl" alt="背景图" class="head-bg-img"></image>-->
+        <!--        <image :src="userInfo.avatarUrl" alt="背景图" class="head-bg-img"></image>-->
         <view class="title-content">
           <!-- 头像 &名称 -->
           <view class="mine-info">
@@ -113,56 +113,62 @@
       </view>
     </view>
 
-    <tab-bar :selectNavIndex="2"/>
-  </div>
+    <!--    <tab-bar :selectNavIndex="2"/>-->
+  </view>
 </template>
 
 <!--suppress NpmUsedModulesInstalled -->
 <script>
-  import tabBar from '@/components/tabbar/tabBar'
+  // import tabBar from '@/components/tabbar/tabBar'
 
   export default {
     components: {
-      tabBar
+      // tabBar
     },
     // 准备数据
     data() {
       return {
-        userInfo: null, //用户信息
+        userInfo: {}, //用户信息
       };
+    },
+    // 业务函数
+    methods: {
+      getUserInfo() {
+        let that = this;
+        // 异步 获取本地缓存
+        wx.getStorage({
+          key: "userInfo",
+          success: function (res) {
+            that.userInfo = res.data;
+          },
+        });
+      },
     },
     // 页面初始化
     created() {
-      let that = this;
-      console.log('page index created', this);
-      // 异步 获取本地缓存
-      wx.getStorage({
-        key: "userInfo",
-        success: function (res) {
-          console.log('mine', res);
-          that.userInfo = res.data;
-        },
-      });
+      // console.log('mine page index created');
+      this.getUserInfo(); // 获取用户信息
     },
     // 完成渲染
     mounted() {
-      console.log('mounted', this);
-      console.log('mine debug', this.userInfo);
+      // console.log('mounted', this);
+      // console.log('mine debug', this.userInfo);
     },
     onLoad() {
-      console.log('page index onLoad', this)
+      // console.log('page index onLoad', this)
     },
     onReady() {
-      console.log('page index onReady', this)
+      // console.log('page index onReady', this)
     },
     onShow() {
-      console.log('onShow', this)
+      console.log('mine onShow');
+      this.getUserInfo(); // 获取用户
     },
     onUnload() {
-      console.log('onUnload', this)
+      // console.log('onUnload', this)
     },
     onHide() {
-      console.log('onHide', this)
+      // console.log('onHide', this);
     }
   }
 </script>
@@ -367,3 +373,4 @@
     margin-left: 120rpx;
   }
 </style>
+tyle>

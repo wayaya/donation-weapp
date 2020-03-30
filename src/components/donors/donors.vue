@@ -71,6 +71,7 @@
         let that = this;
         let index = e.target.dataset.index;
         that.currentTab = index;
+        that.$emit("changeTab", index); // 触发自定义事件
       },
       bindChange: function (e) {
         let that = this;
@@ -101,11 +102,11 @@
     border-bottom: 1rpx solid #ddd;
     height: 76rpx;
     line-height: 76rpx;
-    width: 200rpx;
+    width: 240rpx;
     flex-shrink: 0;
     color: #999;
     font-size: 26rpx;
-    text-align: left;
+    text-align: center;
   }
 
   ._ul.table_component ._ul.content_col {
@@ -120,11 +121,11 @@
     border-bottom: 1rpx solid #ddd;
     height: 80rpx;
     line-height: 80rpx;
-    width: 160rpx;
-    padding-left: 40rpx;
+    width: 240rpx;
     flex-shrink: 0;
     font-size: 28rpx;
     color: #3a3a3a;
+    text-align: center;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;

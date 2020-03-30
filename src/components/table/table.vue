@@ -78,7 +78,7 @@ ul.table_component {
       height: 80rpx;
       line-height: 80rpx;
       width: 160rpx;
-      padding-left: 40rpx;
+      /*padding-left: 40rpx;*/
       flex-shrink: 0;
       font-size: 28rpx;
       color: #3A3A3A;
