@@ -2,6 +2,7 @@
   "pages": [
     "pages/home/main",
     "pages/pub/main",
+    "pages/abc/main",
     "pages/pubm/main",
     "pages/pubs/main",
     "pages/summary/main",
@@ -16,7 +17,9 @@
     "pages/organDetail/main"
   ],
   "pagesDesc": {
-    "pages/home/main": "主页"
+    "pages/home/main": "主页",
+    "pages/pub/main": "发布",
+    "pages/mya/main": "我的"
   },
   "window": {
     "backgroundTextStyle": "light",
