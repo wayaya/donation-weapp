@@ -30,7 +30,7 @@
     </view>
 
     <!-- 获取用户头像与昵称  -->
-    <button style="display:none;" open-type="getUserInfo" lang="zh_CN" @getuserinfo="onGotUserInfo">获取用户信息</button>
+    <button style="display:block;" open-type="getUserInfo" lang="zh_CN" @getuserinfo="onGotUserInfo">获取用户信息</button>
 
     <space :height="'16'"/>
 
