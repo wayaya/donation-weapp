@@ -5,11 +5,13 @@
       <!-- 头部 -->
       <view class="head-title">
         <image src="/static/images/mine/head_sec_bg.png" alt="背景图" class="head-bg-img"></image>
+<!--        <image :src="userInfo.avatarUrl" alt="背景图" class="head-bg-img"></image>-->
         <view class="title-content">
           <!-- 头像 &名称 -->
           <view class="mine-info">
-            <image src="/static/images/mine/user_img.png" alt="头像" class="head-mine-img"></image>
-            <text class="info-name">孟希婷</text>
+            <image style="display: none;" src="/static/images/mine/user_img.png" alt="头像" class="head-mine-img"></image>
+            <image :src="userInfo.avatarUrl" alt="头像" class="head-mine-img"></image>
+            <text class="info-name">{{userInfo.nickName}}</text>
           </view>
           <!-- 公示物品&公示资金 tab -->
           <view class="head-tab">
@@ -123,11 +125,29 @@
     components: {
       tabBar
     },
-    created() {
-      // console.log('page index created', this)
+    // 准备数据
+    data() {
+      return {
+        userInfo: null, //用户信息
+      };
     },
+    // 页面初始化
+    created() {
+      let that = this;
+      console.log('page index created', this);
+      // 异步 获取本地缓存
+      wx.getStorage({
+        key: "userInfo",
+        success: function (res) {
+          console.log('mine', res);
+          that.userInfo = res.data;
+        },
+      });
+    },
+    // 完成渲染
     mounted() {
-      console.log('mounted', this)
+      console.log('mounted', this);
+      console.log('mine debug', this.userInfo);
     },
     onLoad() {
       console.log('page index onLoad', this)

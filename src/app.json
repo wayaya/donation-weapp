@@ -29,7 +29,7 @@
     "backgroundColor": "#fff",
     "selectedColor": "#35CF82",
     "borderStyle": "white",
-    "custom": true,
+    "custom": false,
     "list": [
       {
         "text": "首页",
@@ -38,16 +38,10 @@
         "selectedIconPath": "static/tabs/home-active.png"
       },
       {
-        "text": "",
+        "text": "发布",
         "pagePath": "pages/pub/main",
         "iconPath": "static/tabs/center.png",
         "selectedIconPath": "static/tabs/center.png"
-      },
-      {
-        "text": "首页",
-        "pagePath": "pages/home/main",
-        "iconPath": "static/tabs/home.png",
-        "selectedIconPath": "static/tabs/home-active.png"
       },
       {
         "text": "我的",
